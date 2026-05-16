@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório Final de Estágio de Imersão - UEPG</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background: #f4f4f4;
+            color: #222;
+            line-height: 1.7;
+        }
+        .page {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 50px;
+            box-shadow: 0 0 12px rgba(0,0,0,0.10);
+        }
+
+        /* CABEÇALHO PADRONIZADO */
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 20px;
+            margin-bottom: 35px;
+        }
+        .header-logos {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            gap: 18px;
+        }
+        .header-logos img { height: 70px; width: auto; object-fit: contain; }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            text-transform: uppercase;
+            margin-bottom: 35px;
+            line-height: 1.4;
+        }
+        h2 {
+            margin-top: 35px;
+            margin-bottom: 15px;
+            font-size: 19px;
+            text-transform: uppercase;
+            border-left: 5px solid #003366;
+            padding-left: 12px;
+        }
+        h3 {
+            margin-top: 22px;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        p { text-align: justify; margin-bottom: 14px; }
+
+        /* CAMPOS EDITÁVEIS INLINE */
+        .editable {
+            display: inline-block;
+            min-width: 200px;
+            border-bottom: 1px solid #000;
+            padding: 2px 4px;
+            outline: none;
+            vertical-align: bottom;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+        .editable:focus { background: #eef5ff; }
+        .editable:empty::before {
+            content: attr(data-placeholder);
+            color: #999;
+            font-style: italic;
+            pointer-events: none;
+        }
+        .small { min-width: 90px; }
+        .medium { min-width: 280px; }
+        .large { min-width: 500px; }
+        .full { width: 100%; }
+
+        /* BLOCOS EDITÁVEIS */
+        .editable-block {
+            width: 100%;
+            min-height: 160px;
+            border: 1px solid #999;
+            padding: 15px;
+            margin-top: 10px;
+            outline: none;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            border-radius: 6px;
+            background: #fff;
+        }
+        .editable-block:focus {
+            background: #eef5ff;
+            border-color: #003366;
+        }
+        .editable-block:empty::before {
+            content: attr(data-placeholder);
+            color: #999;
+            font-style: italic;
+        }
+
+        /* CAMPOS DE DATA */
+        input[type="date"] {
+            border: none;
+            border-bottom: 1px solid #000;
+            padding: 4px;
+            background: transparent;
+            outline: none;
+            font-size: 15px;
+        }
+
+        /* ASSINATURAS */
+        .signature-area { margin-top: 80px; }
+        
+        .signature-center {
+            text-align: center;
+            margin-bottom: 60px; /* espaço antes das assinaturas inferiores */
+        }
+        .signature-center .signature-line {
+            margin: 60px auto 10px auto;
+            width: 60%;
+        }
+        
+        .signature-grid-duo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 40px;
+        }
+        .signature-box { text-align: center; }
+        .signature-line {
+            border-top: 1px solid #000;
+            margin-top: 60px;
+            padding-top: 10px;
+        }
+
+        /* IMPRESSÃO */
+        @media print {
+            body { background: #fff; margin: 0; }
+            .page { box-shadow: none; max-width: 100%; padding: 15mm; }
+            h1, h2, h3, p, div { page-break-inside: avoid; }
+            .editable:empty::before { content: ""; }
+            .editable-block:empty::before { content: ""; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page">
+
+    <!-- CABEÇALHO PADRONIZADO -->
+    <div class="header">
+        <div class="header-logos">
+            <img src="secijur.png" alt="SECIJUR"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span style="display:none; height:70px; line-height:70px; font-weight:bold; color:#003366;">[SECIJUR]</span>
+
+            <img src="UEPG.jpg" alt="UEPG"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span style="display:none; height:70px; line-height:70px; font-weight:bold; color:#003366;">[UEPG]</span>
+
+            <img src="ceppodi.png" alt="CEPPODI"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';">
+            <span style="display:none; height:70px; line-height:70px; font-weight:bold; color:#003366;">[CEPPODI]</span>
+        </div>
+    </div>
+
+    <h1>Relatório Final do Estágio de Imersão Prático-Institucional</h1>
+
+    <h2>1. Introdução</h2>
+
+    <h3>1.1 Dados de Identificação do Discente</h3>
+    <p><strong>1.1.1 Nome Completo:</strong><br>
+        <span class="editable large full" contenteditable="true"
+              data-placeholder="Informe seu nome completo"></span>
+    </p>
+    <p><strong>1.1.2 Número do Registro Acadêmico:</strong><br>
+        <span class="editable medium" contenteditable="true"
+              data-placeholder="Informe seu RA"></span>
+    </p>
+    <p><strong>1.1.3 Endereço Completo:</strong><br>
+        <span class="editable large full" contenteditable="true"
+              data-placeholder="Rua, número, bairro, cidade, CEP"></span>
+    </p>
+    <p><strong>1.1.4 Número de Telefone (WhatsApp) e E-mail:</strong><br>
+        <span class="editable large full" contenteditable="true"
+              data-placeholder="(00) 90000-0000 / seu.email@exemplo.com"></span>
+    </p>
+    <p><strong>1.1.5 Nome do(a) Professor(a)-Orientador(a):</strong><br>
+        <span class="editable large full" contenteditable="true"
+              data-placeholder="Nome completo do(a) orientador(a)"></span>
+    </p>
+    <p><strong>1.1.6 Linha de Pesquisa:</strong><br>
+        <span class="editable large full" contenteditable="true"
+              data-placeholder="Linha de pesquisa à qual está vinculado"></span>
+    </p>
+    <p><strong>1.1.7 Título da Pesquisa:</strong><br>
+        <span class="editable large full" contenteditable="true"
+              data-placeholder="Título da sua dissertação/pesquisa"></span>
+    </p>
+
+    <h3>1.2 Dados de Identificação da Unidade Supervisora</h3>
+    <p><strong>1.2.1 Nome Completo:</strong><br>
+        <span class="editable large full" contenteditable="true"
+              data-placeholder="Nome da instituição/entidade"></span>
+    </p>
+    <p><strong>1.2.2 Endereço Completo:</strong><br>
+        <span class="editable large full" contenteditable="true"
+              data-placeholder="Endereço da unidade"></span>
+    </p>
+    <p><strong>1.2.3 Número de Telefone e E-mail:</strong><br>
+        <span class="editable large full" contenteditable="true"
+              data-placeholder="Contato da unidade"></span>
+    </p>
+    <p><strong>1.2.4 Nome Completo do Representante:</strong><br>
+        <span class="editable large full" contenteditable="true"
+              data-placeholder="Nome do representante legal"></span>
+    </p>
+    <p><strong>1.2.5 Função Exercida pelo Representante:</strong><br>
+        <span class="editable large full" contenteditable="true"
+              data-placeholder="Cargo/função do representante"></span>
+    </p>
+
+    <h2>2. Análise Crítica da(s) Questão(ões) Prática(s) Relacionada(s) ao Objeto da Pesquisa</h2>
+    <div class="editable-block" contenteditable="true"
+         data-placeholder="Descreva a análise crítica desenvolvida durante o estágio de imersão."></div>
+
+    <h2>3. Fundamentação Teórica</h2>
+    <div class="editable-block" contenteditable="true"
+         data-placeholder="Apresente os fundamentos teóricos utilizados no desenvolvimento da pesquisa."></div>
+
+    <h2>4. Procedimentos Metodológicos Utilizados no Desenvolvimento do Estágio de Imersão</h2>
+    <div class="editable-block" contenteditable="true"
+         data-placeholder="Descreva os métodos e procedimentos utilizados."></div>
+
+    <!-- 5. APRESENTAÇÃO DO RELATÓRIO (texto fixo incluído) -->
+    <h2>5. Apresentação do Relatório</h2>
+    <p>
+        Deverá conter os aspectos gerais e cronológicos de todas as atividades desenvolvidas,
+        constando necessariamente a discriminação dos locais o estágio de imersão foi realizado, o
+        período de duração em cada local e o total da carga horária atingida. Problemas ocorridos e
+        resultados obtidos também devem compor este campo.
+    </p>
+    <div class="editable-block" contenteditable="true"
+         data-placeholder="Descreva aqui os aspectos gerais e cronológicos das atividades, locais, carga horária, problemas e resultados..."></div>
+
+    <!-- 6. CONCLUSÕES (texto fixo incluído) -->
+    <h2>6. Conclusões e Recomendações Propositivas</h2>
+    <p>
+        Demonstrar a perspectiva translacional das atividades desenvolvidas, destacando os pontos
+        fundamentais e relevantes do período de imersão, bem como o oferecimento de elementos
+        sugestivos de contribuição para minimizar os problemas práticos eventualmente encontrados,
+        bem como aprimoramento das relações sociojurídicas presentes no ambiente pesquisado.
+    </p>
+    <div class="editable-block" contenteditable="true"
+         data-placeholder="Apresente as conclusões e sugestões de melhoria observadas durante o estágio."></div>
+
+    <h2>7. Referências Bibliográficas</h2>
+    <div class="editable-block" contenteditable="true"
+         data-placeholder="Consulte o Manual de Normalização Bibliográfica para Trabalhos Científicos da UEPG (disponível no site da Biblioteca Central) e liste as referências utilizadas."></div>
+
+    <h2>8. Anexos (Se Houver)</h2>
+    <div class="editable-block" contenteditable="true"
+         data-placeholder="Insira observações ou descrição dos anexos."></div>
+
+    <!-- ASSINATURAS REORGANIZADAS -->
+    <div class="signature-area">
+        <p>Ponta Grossa, <input type="date"></p>
+
+        <!-- Discente centralizado -->
+        <div class="signature-center">
+            <div class="signature-line">Discente</div>
+        </div>
+
+        <!-- Duas colunas: Orientador (esquerda) e Representante (direita) -->
+        <div class="signature-grid-duo">
+            <div class="signature-box">
+                <div class="signature-line">Professor(a)-Orientador(a)</div>
+            </div>
+            <div class="signature-box">
+                <div class="signature-line">Representante da Unidade Supervisora</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
