@@ -3,25 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório Final de Estágio de Imersão - UEPG</title>
+    <title>Anexo IV - Relatório Final de Estágio de Imersão - UEPG</title>
     <style>
         * { box-sizing: border-box; }
         body {
             font-family: Arial, sans-serif;
             margin: 40px;
-            background: #f4f4f4;
             color: #222;
             line-height: 1.7;
+            background: #f5f5f5;
         }
         .page {
             max-width: 900px;
             margin: auto;
             background: #fff;
             padding: 50px;
-            box-shadow: 0 0 12px rgba(0,0,0,0.10);
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.10);
         }
 
-        /* CABEÇALHO PADRONIZADO */
+        /* BOTÃO DE IMPRESSÃO - FIXO NO TOPO */
+        .btn-imprimir {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #003366;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+        .btn-imprimir:hover { background: #002244; }
+        .btn-imprimir::before { content: "🖨️ "; }
+
+        /* BOTÃO DE LEITURA DE TELA */
+        .btn-leitura {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #003366;
+            color: #fff;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            font-family: Arial, sans-serif;
+        }
+        .btn-leitura:hover {
+            background: #002244;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+        }
+        .btn-leitura.lendo {
+            background: #c0392b;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.7); }
+            50% { box-shadow: 0 0 0 12px rgba(192, 57, 43, 0); }
+        }
+        .btn-leitura .icone { font-size: 18px; }
+
+        /* CABEÇALHO – LOGOS DISTRIBUÍDAS */
         .header {
             display: flex;
             justify-content: center;
@@ -37,70 +93,96 @@
             width: 100%;
             gap: 18px;
         }
-        .header-logos img { height: 70px; width: auto; object-fit: contain; }
+        .header-logos img {
+            height: 70px;
+            width: auto;
+            object-fit: contain;
+        }
 
-        /* TOPO DO ANEXO (apenas número) */
-        .topo {
+        /* TOPO DO ANEXO (número centralizado) */
+        .topo-anexo {
             text-align: center;
             border-bottom: 2px solid #000;
             padding-bottom: 25px;
             margin-bottom: 45px;
         }
-        .titulo {
+        .topo-anexo .numero-anexo {
             font-size: 24px;
             font-weight: bold;
             color: #003366;
             text-transform: uppercase;
-            line-height: 1.5;
         }
 
         h1 {
             text-align: center;
-            font-size: 24px;
-            text-transform: uppercase;
+            font-size: 20px;
             margin-bottom: 35px;
+            text-transform: uppercase;
             line-height: 1.4;
+            font-weight: bold;
         }
         h2 {
-            margin-top: 35px;
-            margin-bottom: 15px;
-            font-size: 19px;
+            margin-top: 30px;
+            margin-bottom: 10px;
+            font-size: 16px;
             text-transform: uppercase;
+            font-weight: bold;
             border-left: 5px solid #003366;
             padding-left: 12px;
         }
         h3 {
-            margin-top: 22px;
+            margin-top: 20px;
             margin-bottom: 8px;
-            font-size: 16px;
+            font-size: 14px;
+            font-weight: bold;
         }
         p { text-align: justify; margin-bottom: 14px; }
 
-        /* CAMPOS EDITÁVEIS INLINE */
-        .editable {
+        /* CAMPOS FIXOS (UMA LINHA) */
+        .campo-fixo {
             display: inline-block;
-            min-width: 200px;
             border-bottom: 1px solid #000;
-            padding: 2px 4px;
+            padding: 2px 6px;
             outline: none;
-            vertical-align: bottom;
-            white-space: pre-wrap;
-            overflow-wrap: break-word;
+            min-height: 24px;
+            max-height: 48px;
+            line-height: 1.4;
+            background: transparent;
+            transition: background 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            vertical-align: baseline;
         }
-        .editable:focus { background: #eef5ff; }
-        .editable:empty::before {
+        .campo-fixo:focus {
+            background: #eef5ff;
+            border-bottom-color: #003366;
+        }
+        .campo-fixo:empty::before {
             content: attr(data-placeholder);
             color: #999;
             font-style: italic;
             pointer-events: none;
         }
-        .small { min-width: 90px; }
-        .medium { min-width: 280px; }
-        .large { min-width: 500px; }
-        .full { width: 100%; }
 
-        /* BLOCOS EDITÁVEIS */
-        .editable-block {
+        /* Tamanhos específicos para campos de uma linha */
+        .campo-fixo-pequeno { width: 90px; max-width: 90px; min-width: 90px; }
+        .campo-fixo-medio   { width: 280px; max-width: 280px; min-width: 280px; }
+        .campo-fixo-grande  { width: 400px; max-width: 400px; min-width: 400px; }
+        .campo-fixo-full {
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            min-width: 100%;
+            white-space: normal;
+            overflow: visible;
+            text-overflow: clip;
+            margin-top: 4px;
+        }
+
+        /* CAMPOS DE BLOCO (MÚLTIPLAS LINHAS) */
+        .campo-bloco {
+            display: block;
             width: 100%;
             min-height: 160px;
             border: 1px solid #999;
@@ -111,30 +193,40 @@
             overflow-wrap: break-word;
             border-radius: 6px;
             background: #fff;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            transition: background 0.2s, border-color 0.2s;
         }
-        .editable-block:focus {
+        .campo-bloco:focus {
             background: #eef5ff;
             border-color: #003366;
+            box-shadow: 0 0 0 2px rgba(0,51,102,0.1);
         }
-        .editable-block:empty::before {
+        .campo-bloco:empty::before {
             content: attr(data-placeholder);
             color: #999;
             font-style: italic;
+            pointer-events: none;
         }
 
         /* CAMPOS DE DATA */
         input[type="date"] {
-            border: none;
-            border-bottom: 1px solid #000;
-            padding: 4px;
-            background: transparent;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 14px;
             outline: none;
-            font-size: 15px;
+            background: #fff;
+            font-family: inherit;
+        }
+        input[type="date"]:focus {
+            border-color: #003366;
+            box-shadow: 0 0 0 2px rgba(0,51,102,0.1);
         }
 
         /* ASSINATURAS */
         .signature-area { margin-top: 80px; }
-        
         .signature-center {
             text-align: center;
             margin-bottom: 60px;
@@ -143,7 +235,6 @@
             margin: 60px auto 10px auto;
             width: 60%;
         }
-        
         .signature-grid-duo {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -155,21 +246,187 @@
             border-top: 1px solid #000;
             margin-top: 60px;
             padding-top: 10px;
+            font-size: 14px;
+        }
+
+        /* ===== ACESSIBILIDADE eMAG ===== */
+        .skip-to-content {
+            position: absolute;
+            left: -9999px;
+            top: auto;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            background: #000;
+            color: #fff;
+            text-decoration: none;
+            padding: 8px 12px;
+            z-index: 1000;
+        }
+        .skip-to-content:focus {
+            left: 10px;
+            top: 10px;
+            width: auto;
+            height: auto;
+        }
+        .accessibility-shortcuts {
+            background: #f0f4f8;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+        .accessibility-shortcuts a {
+            margin: 0 10px;
+            color: #0369a1;
+            text-decoration: none;
+        }
+        .accessibility-shortcuts a:hover {
+            text-decoration: underline;
+        }
+        .acessibilidade-info {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            border-top: 1px solid #ddd;
+            padding-top: 15px;
+            color: #555;
+            text-align: center;
         }
 
         /* IMPRESSÃO */
         @media print {
-            body { background: #fff; margin: 0; }
-            .page { box-shadow: none; max-width: 100%; padding: 15mm; }
-            h1, h2, h3, p, div { page-break-inside: avoid; }
-            .editable:empty::before { content: ""; }
-            .editable-block:empty::before { content: ""; }
+            @page {
+                size: A4;
+                margin: 15mm;
+            }
+            body {
+                margin: 0 !important;
+                background: #fff !important;
+                padding: 0 !important;
+                color: #000 !important;
+            }
+            .page {
+                max-width: 100% !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            /* Ocultar widgets e botões */
+            .btn-imprimir,
+            .btn-leitura,
+            .accessibility-shortcuts,
+            .acessibilidade-info,
+            .skip-to-content,
+            [vw],
+            .vw-enabled,
+            .vw-access-button,
+            .vw-plugin-wrapper,
+            .vw-plugin-top-wrapper,
+            .vpw-container,
+            .vpw-iframe-container,
+            div[style*="vlibras"],
+            iframe[src*="vlibras"],
+            .uwy-userway,
+            .userway-accessibility-widget,
+            [data-account],
+            #userway,
+            div[id*="userway"],
+            div[class*="userway"],
+            iframe[src*="userway"],
+            [aria-label*="VLibras"],
+            [aria-label*="UserWay"],
+            [style*="position: fixed"],
+            [style*="position:fixed"] {
+                display: none !important;
+                visibility: hidden !important;
+                opacity: 0 !important;
+                height: 0 !important;
+                max-height: 0 !important;
+                width: 0 !important;
+                max-width: 0 !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: none !important;
+                position: absolute !important;
+                left: -9999px !important;
+                top: -9999px !important;
+                overflow: hidden !important;
+                z-index: -9999 !important;
+                pointer-events: none !important;
+            }
+            .campo-fixo,
+            .campo-fixo-full,
+            .campo-bloco {
+                border-bottom: 1px solid #000 !important;
+                background: transparent !important;
+                color: #000 !important;
+                width: auto !important;
+                max-width: none !important;
+                min-width: auto !important;
+                white-space: normal !important;
+                overflow: visible !important;
+                text-overflow: clip !important;
+            }
+            .campo-fixo:empty::before,
+            .campo-bloco:empty::before {
+                content: "_______________________________" !important;
+                color: #000 !important;
+            }
+            input[type="date"] {
+                border: none !important;
+                border-bottom: 1px solid #000 !important;
+                background: transparent !important;
+                color: #000 !important;
+                -webkit-appearance: none !important;
+                appearance: none !important;
+            }
+            h1, h2, h3, p, div, table {
+                page-break-inside: avoid !important;
+            }
+            .signature-area {
+                page-break-inside: avoid !important;
+                margin-top: 60px !important;
+            }
+        }
+
+        /* RESPONSIVO */
+        @media screen and (max-width: 768px) {
+            body { margin: 10px; }
+            .page { padding: 20px; }
+            .header-logos { flex-direction: column; gap: 10px; }
+            .header-logos img { height: 50px; }
+            .signature-grid-duo { grid-template-columns: 1fr; gap: 30px; }
+            h1 { font-size: 16px; }
+            .btn-leitura {
+                bottom: 10px;
+                right: 10px;
+                padding: 10px 14px;
+                font-size: 12px;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="page">
+<!-- BOTÃO DE IMPRESSÃO -->
+<button class="btn-imprimir" onclick="imprimirDocumento()" title="Imprimir ou salvar como PDF">
+    Imprimir / Salvar PDF
+</button>
+
+<!-- ACESSIBILIDADE eMAG: LINK PULAR CONTEÚDO -->
+<a href="#conteudo-principal" class="skip-to-content" accesskey="1" title="Ir para o conteúdo principal (Alt + 1)">Pular para o conteúdo principal</a>
+
+<!-- eMAG: ATALHOS DE TECLADO -->
+<div class="accessibility-shortcuts" aria-label="Atalhos de acessibilidade do teclado">
+    <span>🔑 Atalhos:</span>
+    <a href="#conteudo-principal" accesskey="1">Alt + 1</a> = ir para o conteúdo |
+    <a href="#rodape-acessibilidade" accesskey="4">Alt + 4</a> = ir para o rodapé |
+    <a href="#info-acessibilidade" accesskey="0">Alt + 0</a> = acessibilidade |
+    <a href="#" onclick="alternarLeitura(); return false;" accesskey="2">Alt + 2</a> = ouvir conteúdo
+</div>
+
+<div class="page" id="conteudo-principal" tabindex="-1">
 
     <!-- CABEÇALHO PADRONIZADO -->
     <div class="header">
@@ -188,110 +445,108 @@
         </div>
     </div>
 
-    <!-- APENAS ANEXO IV -->
-    <div class="topo">
-        <div class="titulo">ANEXO IV</div>
+    <!-- TOPO ANEXO IV -->
+    <div class="topo-anexo">
+        <div class="numero-anexo">ANEXO IV</div>
     </div>
 
     <h1>Relatório Final do Estágio de Imersão Prático-Institucional</h1>
 
     <h2>1. Introdução</h2>
 
-    <h3>1.1 Dados de Identificação do Discente</h3>
+    <h3>1.1 Seus Dados</h3>
     <p><strong>1.1.1 Nome Completo:</strong><br>
-        <span class="editable large full" contenteditable="true"
-              data-placeholder="Informe seu nome completo"></span>
+        <span class="campo-fixo campo-fixo-full" contenteditable="true"
+              data-placeholder="Digite seu nome completo"></span>
     </p>
-    <p><strong>1.1.2 Número do Registro Acadêmico:</strong><br>
-        <span class="editable medium" contenteditable="true"
-              data-placeholder="Informe seu RA"></span>
+    <p><strong>1.1.2 Número do Registro Acadêmico (RA):</strong><br>
+        <span class="campo-fixo campo-fixo-medio" contenteditable="true"
+              data-placeholder="Nº do RA"></span>
     </p>
     <p><strong>1.1.3 Endereço Completo:</strong><br>
-        <span class="editable large full" contenteditable="true"
+        <span class="campo-fixo campo-fixo-full" contenteditable="true"
               data-placeholder="Rua, número, bairro, cidade, CEP"></span>
     </p>
-    <p><strong>1.1.4 Número de Telefone (WhatsApp) e E-mail:</strong><br>
-        <span class="editable large full" contenteditable="true"
+    <p><strong>1.1.4 Telefone (WhatsApp) e E-mail:</strong><br>
+        <span class="campo-fixo campo-fixo-full" contenteditable="true"
               data-placeholder="(00) 90000-0000 / seu.email@exemplo.com"></span>
     </p>
     <p><strong>1.1.5 Nome do(a) Professor(a)-Orientador(a):</strong><br>
-        <span class="editable large full" contenteditable="true"
+        <span class="campo-fixo campo-fixo-full" contenteditable="true"
               data-placeholder="Nome completo do(a) orientador(a)"></span>
     </p>
     <p><strong>1.1.6 Linha de Pesquisa:</strong><br>
-        <span class="editable large full" contenteditable="true"
-              data-placeholder="Linha de pesquisa à qual está vinculado"></span>
+        <span class="campo-fixo campo-fixo-full" contenteditable="true"
+              data-placeholder="Linha de pesquisa à qual você está vinculado(a)"></span>
     </p>
     <p><strong>1.1.7 Título da Pesquisa:</strong><br>
-        <span class="editable large full" contenteditable="true"
+        <span class="campo-fixo campo-fixo-full" contenteditable="true"
               data-placeholder="Título da sua dissertação/pesquisa"></span>
     </p>
 
-    <h3>1.2 Dados de Identificação da Unidade Supervisora</h3>
-    <p><strong>1.2.1 Nome Completo:</strong><br>
-        <span class="editable large full" contenteditable="true"
-              data-placeholder="Nome da instituição/entidade"></span>
+    <h3>1.2 Dados da Unidade Supervisora</h3>
+    <p><strong>1.2.1 Nome da Instituição/Entidade:</strong><br>
+        <span class="campo-fixo campo-fixo-full" contenteditable="true"
+              data-placeholder="Nome completo da instituição ou entidade"></span>
     </p>
     <p><strong>1.2.2 Endereço Completo:</strong><br>
-        <span class="editable large full" contenteditable="true"
+        <span class="campo-fixo campo-fixo-full" contenteditable="true"
               data-placeholder="Endereço da unidade"></span>
     </p>
-    <p><strong>1.2.3 Número de Telefone e E-mail:</strong><br>
-        <span class="editable large full" contenteditable="true"
+    <p><strong>1.2.3 Telefone e E-mail:</strong><br>
+        <span class="campo-fixo campo-fixo-full" contenteditable="true"
               data-placeholder="Contato da unidade"></span>
     </p>
-    <p><strong>1.2.4 Nome Completo do Representante:</strong><br>
-        <span class="editable large full" contenteditable="true"
-              data-placeholder="Nome do representante legal"></span>
+    <p><strong>1.2.4 Nome do Representante Legal:</strong><br>
+        <span class="campo-fixo campo-fixo-full" contenteditable="true"
+              data-placeholder="Nome completo do representante"></span>
     </p>
-    <p><strong>1.2.5 Função Exercida pelo Representante:</strong><br>
-        <span class="editable large full" contenteditable="true"
-              data-placeholder="Cargo/função do representante"></span>
+    <p><strong>1.2.5 Função/Cargo do Representante:</strong><br>
+        <span class="campo-fixo campo-fixo-full" contenteditable="true"
+              data-placeholder="Cargo ou função exercida"></span>
     </p>
 
     <h2>2. Análise Crítica da(s) Questão(ões) Prática(s) Relacionada(s) ao Objeto da Pesquisa</h2>
-    <div class="editable-block" contenteditable="true"
+    <div class="campo-bloco" contenteditable="true"
          data-placeholder="Descreva a análise crítica desenvolvida durante o estágio de imersão."></div>
 
     <h2>3. Fundamentação Teórica</h2>
-    <div class="editable-block" contenteditable="true"
+    <div class="campo-bloco" contenteditable="true"
          data-placeholder="Apresente os fundamentos teóricos utilizados no desenvolvimento da pesquisa."></div>
 
-    <h2>4. Procedimentos Metodológicos Utilizados no Desenvolvimento do Estágio de Imersão</h2>
-    <div class="editable-block" contenteditable="true"
+    <h2>4. Procedimentos Metodológicos Utilizados no Estágio</h2>
+    <div class="campo-bloco" contenteditable="true"
          data-placeholder="Descreva os métodos e procedimentos utilizados."></div>
 
-    <!-- 5. APRESENTAÇÃO DO RELATÓRIO (texto fixo incluído) -->
     <h2>5. Apresentação do Relatório</h2>
     <p>
-        Deverá conter os aspectos gerais e cronológicos de todas as atividades desenvolvidas,
-        constando necessariamente a discriminação dos locais o estágio de imersão foi realizado, o
-        período de duração em cada local e o total da carga horária atingida. Problemas ocorridos e
-        resultados obtidos também devem compor este campo.
+        Este campo deve conter os aspectos gerais e cronológicos de todas as atividades desenvolvidas, 
+        incluindo obrigatoriamente a descrição detalhada dos locais onde o estágio foi realizado, 
+        o período de duração em cada local e o total da carga horária atingida. 
+        Problemas ocorridos e resultados obtidos também devem ser informados.
     </p>
-    <div class="editable-block" contenteditable="true"
+    <div class="campo-bloco" contenteditable="true"
          data-placeholder="Descreva aqui os aspectos gerais e cronológicos das atividades, locais, carga horária, problemas e resultados..."></div>
 
-    <!-- 6. CONCLUSÕES (texto fixo incluído) -->
     <h2>6. Conclusões e Recomendações Propositivas</h2>
     <p>
-        Demonstrar a perspectiva translacional das atividades desenvolvidas, destacando os pontos
-        fundamentais e relevantes do período de imersão, bem como o oferecimento de elementos
-        sugestivos de contribuição para minimizar os problemas práticos eventualmente encontrados,
-        bem como aprimoramento das relações sociojurídicas presentes no ambiente pesquisado.
+        Demonstre a perspectiva translacional das atividades desenvolvidas, destacando os pontos 
+        fundamentais e relevantes do período de imersão. Ofereça sugestões que possam contribuir 
+        para minimizar os problemas práticos encontrados e para o aprimoramento das relações 
+        sociojurídicas presentes no ambiente pesquisado.
     </p>
-    <div class="editable-block" contenteditable="true"
+    <div class="campo-bloco" contenteditable="true"
          data-placeholder="Apresente as conclusões e sugestões de melhoria observadas durante o estágio."></div>
 
     <h2>7. Referências Bibliográficas</h2>
-    <div class="editable-block" contenteditable="true"
+    <div class="campo-bloco" contenteditable="true"
          data-placeholder="Consulte o Manual de Normalização Bibliográfica para Trabalhos Científicos da UEPG (disponível no site da Biblioteca Central) e liste as referências utilizadas."></div>
 
-    <h2>8. Anexos (Se Houver)</h2>
-    <div class="editable-block" contenteditable="true"
+    <h2>8. Anexos (se houver)</h2>
+    <div class="campo-bloco" contenteditable="true"
          data-placeholder="Insira observações ou descrição dos anexos."></div>
 
-    <!-- ASSINATURAS REORGANIZADAS -->
+    <!-- ASSINATURAS -->
     <div class="signature-area">
         <p>Ponta Grossa, <input type="date"></p>
 
@@ -300,7 +555,7 @@
             <div class="signature-line">Discente</div>
         </div>
 
-        <!-- Duas colunas: Orientador (esquerda) e Representante (direita) -->
+        <!-- Duas colunas: Orientador e Representante -->
         <div class="signature-grid-duo">
             <div class="signature-box">
                 <div class="signature-line">Professor(a)-Orientador(a)</div>
@@ -312,6 +567,246 @@
     </div>
 
 </div>
+
+<!-- BOTÃO DE LEITURA DE TELA -->
+<button class="btn-leitura" id="btnLeitura" aria-label="Ouvir conteúdo da página (Alt + 2)" title="Clique para ouvir o conteúdo em voz alta">
+    <span class="icone">🔊</span>
+    <span class="texto">Ouvir</span>
+</button>
+
+<!-- RODAPÉ DE ACESSIBILIDADE -->
+<div id="rodape-acessibilidade" class="acessibilidade-info" tabindex="-1">
+    <div id="info-acessibilidade">
+        <strong>📌 Acessibilidade – Atalhos do teclado (eMAG):</strong><br>
+        • <kbd>Alt + 1</kbd> – Ir para o conteúdo principal<br>
+        • <kbd>Alt + 2</kbd> – Ouvir conteúdo em voz alta (Leitura de Tela)<br>
+        • <kbd>Alt + 4</kbd> – Ir para este rodapé<br>
+        • <kbd>Alt + 0</kbd> – Ir para as informações de acessibilidade<br>
+        <br>
+        <strong>🔊 Ferramentas disponíveis nesta página:</strong><br>
+        ✓ <strong>VLibras</strong> – Tradutor para Língua Brasileira de Sinais<br>
+        ✓ <strong>UserWay</strong> – Painel de acessibilidade<br>
+        ✓ <strong>Leitura de Tela</strong> – Botão "🔊 Ouvir" no canto inferior direito (atalho: Alt + 2) para ouvir o conteúdo em voz alta via Web Speech API<br>
+        <br>
+        <em>Este documento segue as diretrizes da Lei Brasileira de Inclusão (LBI) e do Modelo de Acessibilidade em Governo Eletrônico (eMAG).</em>
+    </div>
+</div>
+
+<!-- VLIBRAS -->
+<div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+</div>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    });
+</script>
+
+<!-- USERWAY -->
+<script src="https://cdn.userway.org/widget.js" data-account="SEU_ID_AQUI"></script>
+
+<!-- LEITURA DE TELA - WEB SPEECH API -->
+<script>
+(function() {
+    const btnLeitura = document.getElementById('btnLeitura');
+    const synth = window.speechSynthesis;
+    let utterance = null;
+    let estaLendo = false;
+
+    if (!('speechSynthesis' in window)) {
+        btnLeitura.style.display = 'none';
+        return;
+    }
+
+    function obterVozPtBr() {
+        const vozes = synth.getVoices();
+        return vozes.find(v => v.lang === 'pt-BR') || 
+               vozes.find(v => v.lang.startsWith('pt')) ||
+               vozes[0];
+    }
+
+    if (synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = () => {};
+    }
+
+    function obterTextoPrincipal() {
+        const seletor = document.querySelector('.page') || document.body;
+        const clone = seletor.cloneNode(true);
+        
+        const elementosParaRemover = clone.querySelectorAll(
+            '.btn-imprimir, .btn-leitura, .accessibility-shortcuts, ' +
+            '.acessibilidade-info, .skip-to-content, nav, footer, ' +
+            'button, script, style, [data-placeholder]'
+        );
+        elementosParaRemover.forEach(el => el.remove());
+        
+        clone.querySelectorAll('.campo-fixo, .campo-bloco').forEach(campo => {
+            if (!campo.textContent.trim()) {
+                campo.textContent = '[campo em branco]';
+            }
+        });
+        
+        return clone.innerText || clone.textContent;
+    }
+
+    function dividirTexto(texto, maxLen) {
+        const chunks = [];
+        const sentencas = texto.match(/[^.!?]+[.!?]+/g) || [texto];
+        let chunkAtual = '';
+
+        sentencas.forEach(sentenca => {
+            if ((chunkAtual + sentenca).length > maxLen && chunkAtual) {
+                chunks.push(chunkAtual.trim());
+                chunkAtual = sentenca;
+            } else {
+                chunkAtual += sentenca;
+            }
+        });
+
+        if (chunkAtual.trim()) chunks.push(chunkAtual.trim());
+        return chunks;
+    }
+
+    function finalizarLeitura() {
+        estaLendo = false;
+        btnLeitura.classList.remove('lendo');
+        btnLeitura.querySelector('.icone').textContent = '🔊';
+        btnLeitura.querySelector('.texto').textContent = 'Ouvir';
+        btnLeitura.setAttribute('aria-label', 'Ouvir conteúdo da página (Alt + 2)');
+    }
+
+    window.alternarLeitura = function() {
+        if (estaLendo) {
+            synth.cancel();
+            finalizarLeitura();
+        } else {
+            const texto = obterTextoPrincipal();
+            if (!texto.trim()) {
+                alert('Não há conteúdo para ler.');
+                return;
+            }
+
+            const chunks = dividirTexto(texto, 200);
+            let indiceAtual = 0;
+
+            function lerProximoChunk() {
+                if (indiceAtual >= chunks.length || !estaLendo) {
+                    finalizarLeitura();
+                    return;
+                }
+
+                utterance = new SpeechSynthesisUtterance(chunks[indiceAtual]);
+                const voz = obterVozPtBr();
+                if (voz) utterance.voice = voz;
+                utterance.lang = 'pt-BR';
+                utterance.rate = 0.9;
+                utterance.pitch = 1;
+                utterance.volume = 1;
+
+                utterance.onend = () => {
+                    indiceAtual++;
+                    lerProximoChunk();
+                };
+
+                utterance.onerror = (event) => {
+                    console.error('Erro na síntese de voz:', event);
+                    finalizarLeitura();
+                };
+
+                synth.speak(utterance);
+            }
+
+            estaLendo = true;
+            btnLeitura.classList.add('lendo');
+            btnLeitura.querySelector('.icone').textContent = '⏹️';
+            btnLeitura.querySelector('.texto').textContent = 'Parar';
+            btnLeitura.setAttribute('aria-label', 'Parar leitura em voz alta');
+            
+            lerProximoChunk();
+        }
+    };
+
+    btnLeitura.addEventListener('click', window.alternarLeitura);
+
+    window.addEventListener('beforeunload', () => {
+        if (estaLendo) synth.cancel();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.altKey && e.key === '2') {
+            e.preventDefault();
+            window.alternarLeitura();
+        }
+    });
+})();
+</script>
+
+<!-- SCRIPT DE IMPRESSÃO (OCULTA WIDGETS) -->
+<script>
+let elementosOcultados = [];
+
+function ocultarWidgetsAcessibilidade() {
+    elementosOcultados = [];
+    const seletores = [
+        '[vw]', '.vw-access-button', '.vw-plugin-wrapper', '.vw-plugin-top-wrapper',
+        '.vpw-container', '.vpw-iframe-container', 'iframe[src*="vlibras"]',
+        '.uwy-userway', '.userway-accessibility-widget', '#userway',
+        'div[id*="userway"]', 'div[class*="userway"]', 'iframe[src*="userway"]',
+        '.btn-imprimir', '.btn-leitura'
+    ];
+    
+    seletores.forEach(seletor => {
+        document.querySelectorAll(seletor).forEach(el => {
+            elementosOcultados.push({
+                elemento: el,
+                displayOriginal: el.style.display,
+                visibilityOriginal: el.style.visibility
+            });
+            el.style.display = 'none';
+            el.style.visibility = 'hidden';
+        });
+    });
+    
+    if (window.speechSynthesis && window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+    }
+}
+
+function restaurarWidgetsAcessibilidade() {
+    elementosOcultados.forEach(item => {
+        try {
+            item.elemento.style.display = item.displayOriginal;
+            item.elemento.style.visibility = item.visibilityOriginal;
+        } catch(e) {}
+    });
+    elementosOcultados = [];
+}
+
+function imprimirDocumento() {
+    ocultarWidgetsAcessibilidade();
+    setTimeout(() => {
+        window.print();
+        setTimeout(restaurarWidgetsAcessibilidade, 300);
+    }, 100);
+}
+
+window.addEventListener('beforeprint', ocultarWidgetsAcessibilidade);
+
+window.addEventListener('afterprint', function() {
+    setTimeout(restaurarWidgetsAcessibilidade, 300);
+});
+
+document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+        e.preventDefault();
+        imprimirDocumento();
+    }
+});
+</script>
 
 </body>
 </html>
